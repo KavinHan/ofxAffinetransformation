@@ -1,5 +1,8 @@
 #include "ofxAffineTransformation.h"
 
+/**
+ * Initialize parameters
+ */
 ofxAffineTransformation::ofxAffineTransformation() {
 	index     = -1;
 	h         = 8;
@@ -12,12 +15,17 @@ ofxAffineTransformation::ofxAffineTransformation() {
 	bDrawFlag = true;
 }
 
-ofxAffineTransformation::~ofxAffineTransformation() {
-	
-}
+ofxAffineTransformation::~ofxAffineTransformation() {}
 
-// set cross
 //--------------------------------------------------------------
+/**
+ * Set initialize four corner position
+ * @params {int} m padding from screen size
+ * corder order:
+ * 0-----1
+ * |     |
+ * 3-----2
+ */
 void ofxAffineTransformation::setCross(int m) {
 	pts[0].set(m, m);
 	pts[1].set(ofGetWidth() - m, m);
@@ -30,8 +38,11 @@ void ofxAffineTransformation::setCross(int m) {
 
 }
 
-// say hello
 //--------------------------------------------------------------
+/**
+ * check mouse position is near by control coner point
+ * if near by then index save corner index
+ */
 void ofxAffineTransformation::checkCross() {
 	int i, j = -1;
 	for (i = 0; i<4; i++)
@@ -39,27 +50,36 @@ void ofxAffineTransformation::checkCross() {
 	index = j;
 }
 
-// say hello
 //--------------------------------------------------------------
+/**
+ * if mouse position near by corner point
+ * then change corner point position same with mouse position
+ */
 void ofxAffineTransformation::updateCross() {
 	if (index >= 0 && index<4)
 		pts[index].set(ofGetMouseX(), ofGetMouseY());
 }
 
-// say hello
 //--------------------------------------------------------------
+/**
+ * not change any corner point position
+ */
 void ofxAffineTransformation::releaseCross() {
 	index = -1;
 }
 
-// say hello
 //--------------------------------------------------------------
+/**
+ *
+ */
 void ofxAffineTransformation::changeDrawFlag() {
 	bDrawFlag = !bDrawFlag;
 }
 
-// say hello
 //--------------------------------------------------------------
+/**
+ * draw corner points
+ */
 void ofxAffineTransformation::drawCross() {
 	if (!bDrawFlag) return;
 	ofNoFill();
@@ -82,17 +102,28 @@ void ofxAffineTransformation::drawCross() {
 	ofEndShape(true);
 }
 
-// say hello
 //--------------------------------------------------------------
+/**
+ * return {float} fx
+ */
 float ofxAffineTransformation::getFx() {
 	return fx;
 }
 
-// say hello
 //--------------------------------------------------------------
+/**
+ * return {float} fy
+ */
 float ofxAffineTransformation::getFy() {
 	return fy;
 }
+
+//--------------------------------------------------------------
+/**
+ * use input x,y calculate fx,fy
+ * @param {int} _x
+ * @param {int} _y
+ */
 void ofxAffineTransformation::applyAffineTransformation(int _x, int _y) {
 	fx = T[0] * _x + T[1] * _y + T[2];
 	fy = T[3] * _x + T[4] * _y + T[5];
@@ -100,8 +131,12 @@ void ofxAffineTransformation::applyAffineTransformation(int _x, int _y) {
 	fx /= fz;
 	fy /= fz;
 }
-// say hello
+
 //--------------------------------------------------------------
+/**
+ * calculate T
+ * @params {bool} debug
+ */
 void ofxAffineTransformation::calAffineTransform(bool debug) {
 
 	float A[8][9];
@@ -127,7 +162,7 @@ void ofxAffineTransformation::calAffineTransform(bool debug) {
 		A[2 * i + 1][7] = -pts[i].y*npts[i].y;
 		A[2 * i + 1][8] = -npts[i].y;
 	}
-	
+
 
 	float At[9][8];
 	// At = A.transpose()

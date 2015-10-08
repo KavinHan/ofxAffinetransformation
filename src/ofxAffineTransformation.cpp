@@ -6,6 +6,10 @@
 ofxAffineTransformation::ofxAffineTransformation() {
 	index     = -1;
 	h         = 8;
+	areaX     = 0;
+	areaY     = 0;
+	areaW     = ofGetWidth();
+	areaH     = ofGetHeight();
 	fx        = 0.;
 	fy        = 0.;
 	fz        = 0.;
@@ -20,23 +24,48 @@ ofxAffineTransformation::~ofxAffineTransformation() {}
 //--------------------------------------------------------------
 /**
  * Set initialize four corner position
- * @params {int} m padding from screen size
+ * @params {int}  m padding from corner points area
+ * @params {int} _x corner points area start position.x
+ * @params {int} _y corner points area start position.y
+ * @params {int} _w corner points area width
+ * @params {int} _h corner points area height
  * corder order:
  * 0-----1
  * |     |
  * 3-----2
  */
-void ofxAffineTransformation::setCross(int m) {
-	pts[0].set(m, m);
-	pts[1].set(ofGetWidth() - m, m);
-	pts[2].set(ofGetWidth() - m, ofGetHeight() - m);
-	pts[3].set(m, ofGetHeight() - m);
+void ofxAffineTransformation::setCross(int m, int _x, int _y, int _w, int _h) {
+	areaX = _x;
+	areaY = _y;
+	areaW = _w;
+	areaH = _h;
+
+	pts[0].set(areaX + m        , areaY + m);
+	pts[1].set(areaX + areaW - m, areaY + m);
+	pts[2].set(areaX + areaW - m, areaY + areaH - m);
+	pts[3].set(areaX + m        , areaY + areaH - m);
 	npts[0].set(0, 0);
 	npts[1].set(1, 0);
 	npts[2].set(1, 1);
 	npts[3].set(0, 1);
-
 }
+/**
+* Set initialize four corner position
+* @params {int}  m padding from corner points area
+* @params {int} _w corner points area width
+* @params {int} _h corner points area height
+*/
+void ofxAffineTransformation::setCross(int m, int _w, int _h) {
+	setCross(m, 0, 0, _w, _h);
+}
+/**
+* Set initialize four corner position
+* @params {int}  m padding from corner points area
+*/
+void ofxAffineTransformation::setCross(int m) {
+	setCross(m, ofGetWidth(), ofGetHeight());
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -56,8 +85,13 @@ void ofxAffineTransformation::checkCross() {
  * then change corner point position same with mouse position
  */
 void ofxAffineTransformation::updateCross() {
-	if (index >= 0 && index<4)
-		pts[index].set(ofGetMouseX(), ofGetMouseY());
+	if (index >= 0 && index < 4) {
+		int _x = ofGetMouseX();
+		int _y = ofGetMouseY();
+		if (_x > areaX && _x < areaX + areaW &&
+			_y > areaY && _y < areaY + areaH)
+			pts[index].set(_x, _y);
+	}
 }
 
 //--------------------------------------------------------------

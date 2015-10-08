@@ -13,6 +13,8 @@ public:
 	Eigenvalue EV;
 
 	void setCross(int m);
+	void setCross(int m, int _w, int _h);
+	void setCross(int m, int _x, int _y, int _w, int _h);
 	void drawCross();
 	void checkCross();
 	void updateCross();
@@ -26,6 +28,7 @@ public:
 private:
 	int index;
 	int h;
+	int areaX, areaY, areaW, areaH;
 	float fx;
 	float fy;
 	float fz;

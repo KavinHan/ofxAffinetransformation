@@ -16,7 +16,6 @@ ofxAffineTransformation::ofxAffineTransformation() {
 	T         = new float[9];
 	pts       = new ofVec2f[4];
 	npts      = new ofVec2f[4];
-	bDrawFlag = true;
 }
 
 ofxAffineTransformation::~ofxAffineTransformation() {}
@@ -134,18 +133,9 @@ void ofxAffineTransformation::releaseCross() {
 
 //--------------------------------------------------------------
 /**
- *
- */
-void ofxAffineTransformation::changeDrawFlag() {
-	bDrawFlag = !bDrawFlag;
-}
-
-//--------------------------------------------------------------
-/**
  * draw corner points
  */
 void ofxAffineTransformation::drawCross() {
-	if (!bDrawFlag) return;
 	ofNoFill();
 	if (index != -1) {
 		ofSetLineWidth(6);

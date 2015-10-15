@@ -12,9 +12,12 @@ public:
 
 	Eigenvalue EV;
 
+	ofVec2f *pts;
+
 	void setCross(int m);
 	void setCross(int m, int _w, int _h);
 	void setCross(int m, int _x, int _y, int _w, int _h);
+	void setCross(vector<ofVec2f> _pnts);
 	void drawCross();
 	void checkCross();
 	void updateCross();
@@ -24,6 +27,7 @@ public:
 	float getFy();
 	void calAffineTransform(bool debug);
 	void applyAffineTransformation(int _x, int _y);
+	bool checkInside(int _x, int _y);
 
 private:
 	int index;
@@ -33,7 +37,6 @@ private:
 	float fy;
 	float fz;
 	float *T;
-	ofVec2f *pts;
 	ofVec2f *npts;
 	bool bDrawFlag;
 };

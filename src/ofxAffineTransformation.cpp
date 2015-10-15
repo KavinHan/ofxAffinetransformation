@@ -65,7 +65,20 @@ void ofxAffineTransformation::setCross(int m, int _w, int _h) {
 void ofxAffineTransformation::setCross(int m) {
 	setCross(m, ofGetWidth(), ofGetHeight());
 }
-
+/**
+* Set initialize four corner position
+* @params {vector<ofVec2f>}  _pnts four corner list
+*/
+void ofxAffineTransformation::setCross(vector<ofVec2f> _pnts) {
+	pts[0] = _pnts[0];
+	pts[1] = _pnts[1];
+	pts[2] = _pnts[2];
+	pts[3] = _pnts[3];
+	npts[0].set(0, 0);
+	npts[1].set(1, 0);
+	npts[2].set(1, 1);
+	npts[3].set(0, 1);
+}
 
 //--------------------------------------------------------------
 /**
@@ -77,6 +90,23 @@ void ofxAffineTransformation::checkCross() {
 	for (i = 0; i<4; i++)
 		if (abs(pts[i].x - ofGetMouseX()) + abs(pts[i].y - ofGetMouseY())<h) j = i;
 	index = j;
+}
+
+//--------------------------------------------------------------
+/**
+* check the position(_x, _y) is inside or outside
+* @params {int} _x position.x
+* @params {int} _y position.y
+*/
+bool ofxAffineTransformation::checkInside(int _x, int _y) {
+	float fx, fy, fz;
+	fx = T[0] * _x + T[1] * _y + T[2];
+	fy = T[3] * _x + T[4] * _y + T[5];
+	fz = T[6] * _x + T[7] * _y + T[8];
+	fx /= fz;
+	fy /= fz;
+	if (fx >= 0. && fx <= 1. && fy >= 0. && fy <= 1.) return true;
+	else return false;
 }
 
 //--------------------------------------------------------------

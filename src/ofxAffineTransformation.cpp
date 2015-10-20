@@ -174,6 +174,14 @@ float ofxAffineTransformation::getFy() {
 
 //--------------------------------------------------------------
 /**
+* return {float} fy
+*/
+float *ofxAffineTransformation::getT() {
+	return T;
+}
+
+//--------------------------------------------------------------
+/**
  * use input x,y calculate fx,fy
  * @param {int} _x
  * @param {int} _y

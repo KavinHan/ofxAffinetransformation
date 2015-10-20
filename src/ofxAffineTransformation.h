@@ -22,6 +22,7 @@ public:
 	void  releaseCross();
 	float getFx();
 	float getFy();
+	float *getT();
 	void  calAffineTransform(bool debug);
 	void  applyAffineTransformation(int _x, int _y);
 	bool  checkInside(int _x, int _y);

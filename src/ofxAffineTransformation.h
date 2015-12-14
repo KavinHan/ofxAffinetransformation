@@ -26,6 +26,7 @@ public:
 	void  calAffineTransform(bool debug);
 	void  applyAffineTransformation(int _x, int _y);
 	bool  checkInside(int _x, int _y);
+	ofVec2f* getPts();
 
 private:
 	int     index;		// corner index

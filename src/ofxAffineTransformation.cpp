@@ -81,6 +81,14 @@ void ofxAffineTransformation::setCross(vector<ofVec2f> _pnts) {
 
 //--------------------------------------------------------------
 /**
+ * get four points
+ */
+ofVec2f* ofxAffineTransformation::getPts() {
+	return pts;
+}
+
+//--------------------------------------------------------------
+/**
  * check mouse position is near by control coner point
  * if near by then index save corner index
  */
@@ -136,6 +144,7 @@ void ofxAffineTransformation::releaseCross() {
  * draw corner points
  */
 void ofxAffineTransformation::drawCross() {
+	ofPushStyle();
 	ofNoFill();
 	if (index != -1) {
 		ofSetLineWidth(6);
@@ -154,6 +163,7 @@ void ofxAffineTransformation::drawCross() {
 	for (int i = 0; i<4; i++)
 		ofVertex(pts[i].x, pts[i].y);
 	ofEndShape(true);
+	ofPopStyle();
 }
 
 //--------------------------------------------------------------

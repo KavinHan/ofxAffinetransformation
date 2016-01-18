@@ -23,4 +23,5 @@ public:
 	void gotMessage(ofMessage msg);
 
 	ofxAffineTransformation aT;
+	bool bDrawAT;
 };
